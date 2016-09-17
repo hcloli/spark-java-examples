@@ -2,4 +2,4 @@ target/
 .DS_Store
 .idea/
 spark-examples.iml
-data/cloud/output/
+output/

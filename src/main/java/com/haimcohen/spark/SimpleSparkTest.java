@@ -11,13 +11,23 @@ import scala.Tuple2;
 import java.io.File;
 
 /**
- * Created by haimcohen on 31/08/2016.
+ * Example of using spark for parsing log file and count occurrences.
+ * The log file parsed here is a type of syslog. The program extract the writing component
+ * from each line and count all lines written in each occurences.
+ * This program shows the following Spark capabilities:
+ * <li>Read text file</li>
+ * <li>Mapping RDD</li>
+ * <li>User of pair RDD of type &ltK, V&gt</li>
+ * <li>Reduce by key</li>
+ * <li>Save RDD to text file</li>
+ *
+ * Created by Haim Cohen on 31/08/2016.
  */
 public class SimpleSparkTest {
 
     public static void main(String[] args) {
         try {
-            FileUtils.deleteDirectory(new File("data/cloud/output"));
+            FileUtils.deleteDirectory(new File("output/cloud"));
 
             SparkSession spark = SparkSession.builder()
                     .appName("cloud-init-parser")
@@ -50,9 +60,7 @@ public class SimpleSparkTest {
 
             JavaPairRDD<Integer, String> sorted = reversed.sortByKey(false);
 
-//            sorted.collect().stream().forEach(System.out::println);
-
-            sorted.saveAsTextFile("data/cloud/output");
+            sorted.saveAsTextFile("output/cloud/");
         } catch (Exception e) {
             e.printStackTrace();
         }
